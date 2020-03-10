@@ -3,44 +3,36 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	tools:context=".Dashboard">
 
+	<pl.droidsonroids.gif.GifImageView
+		android:layout_margin="20dp"
+		android:layout_width="match_parent"
+		android:layout_gravity="center_horizontal"
+		android:layout_height="220dp"
+		android:src="@drawable/giphy"
+		/>
+
+
 	<LinearLayout
+		android:layout_marginTop="150dp"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical"
 		android:layout_gravity="center"
 		>
 
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/status"
-			android:layout_gravity="center"
-			android:gravity="center"
-			android:textSize="30sp"
-			android:textStyle="bold"
-			android:textColor="#A44DC0"
-			/>
 
-		<Switch
-			android:layout_marginTop="50dp"
-			android:layout_marginBottom="30dp"
-			android:theme="@style/SCBSwitch"
-			android:checked="true"
-			android:backgroundTint="#0E97B3"
-			android:gravity="end|bottom"
-			android:layout_gravity="center"
-			android:id="@+id/switchID"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"/>
+
 
 
 		<LinearLayout
+			android:padding="20dp"
 			android:layout_marginTop="20dp"
 			android:weightSum="4"
 			android:orientation="horizontal"
-			android:layout_width="match_parent"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
 			>
@@ -76,7 +68,7 @@
 				android:layout_gravity="center_horizontal"
 				android:layout_width="0dp"
 				android:layout_height="50dp"
-				android:src="@drawable/mic_on"
+				android:src="@drawable/mic_off"
 				android:padding="6dp"/>
 
 
@@ -84,14 +76,38 @@
 
 
 		</LinearLayout>
-		<ImageView
-			android:id="@+id/cleanID"
-			android:layout_weight="1"
+
+
+
+		<com.varunest.sparkbutton.SparkButton
+			android:id="@+id/spark_button"
+			android:layout_marginTop="0dp"
+			android:layout_width="255dp"
+			android:layout_height="200dp"
+
 			android:layout_gravity="center_horizontal"
-			android:layout_width="70dp"
-			android:layout_height="0dp"
-			android:src="@drawable/clean_now"
-			android:padding="6dp"/>
+			app:sparkbutton_activeImage="@drawable/active"
+			app:sparkbutton_iconSize="70dp"
+			app:sparkbutton_inActiveImage="@drawable/inactive"
+			app:sparkbutton_primaryColor="@color/primary_color"
+			app:sparkbutton_secondaryColor="@color/secondary_color"
+			/>
+
+
+
+		<Switch
+
+			android:layout_marginBottom="30dp"
+			android:theme="@style/SCBSwitch"
+			android:checked="true"
+			android:backgroundTint="#0E97B3"
+			android:gravity="end|bottom"
+			android:layout_gravity="center"
+			android:id="@+id/switchID"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+
+
 	</LinearLayout>
 
 </FrameLayout>

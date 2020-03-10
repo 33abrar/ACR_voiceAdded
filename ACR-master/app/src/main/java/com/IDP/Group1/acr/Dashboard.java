@@ -49,9 +49,11 @@ public class Dashboard extends Fragment {
 	private User user;
 
 	boolean isRecording;
-	ImageView alert,sleep,clean,notification,mic,settings, battery;
+	ImageView alert,sleep,notification,mic,settings, battery;
 	TextView batteryText;
 	Switch aSwitch;
+
+	com.varunest.sparkbutton.SparkButton clean;
 
 	public Dashboard() {
 		// Required empty public constructor
@@ -66,7 +68,7 @@ public class Dashboard extends Fragment {
 		aSwitch = V.findViewById(R.id.switchID);
 		alert =V.findViewById(R.id.alertID);
 		sleep =V.findViewById(R.id.sleepID);
-		clean =V.findViewById(R.id.cleanID);
+		clean =V.findViewById(R.id.spark_button);
 		notification =V.findViewById(R.id.notificationID);
 		mic =V.findViewById(R.id.micID);
 
@@ -242,12 +244,7 @@ public class Dashboard extends Fragment {
 	private void processResult(String result_message) {
 		result_message = result_message.toLowerCase();
 
-//        Handle at least four sample cases
-
-//        First: What is your Name?
-//        Second: What is the time?
-//        Third: Is the earth flat or a sphere?
-//        Fourth: Open a browser and open url
+		Toast.makeText(getContext(),result_message,Toast.LENGTH_LONG).show();
 		if(result_message.indexOf("what") != -1){
 			if(result_message.indexOf("your name") != -1){
 				speak("My Name is Mr.Auto Vacc. You can call me A C R");
@@ -256,8 +253,18 @@ public class Dashboard extends Fragment {
 				String time_now = DateUtils.formatDateTime(getContext(), new Date().getTime(),DateUtils.FORMAT_SHOW_TIME);
 				speak("The time is now: " + time_now);
 			}
-		} else if (result_message.indexOf("Start Cleaning") != -1){
-			speak("Starting...");
+			if (result_message.indexOf("master") != -1){
+				speak("My master name is leftenant cornel Mr. Nazrul");
+			}
+		}
+		else if (result_message.indexOf("start cleaning") != -1){
+			speak("Cleaning Started");
+		}
+		else if (result_message.indexOf("stop cleaning") != -1) {
+			speak("Cleaning Stopped");
+		}
+		else{
+			speak("please repeat the command");
 		}
 	}
 
@@ -293,7 +300,6 @@ public class Dashboard extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		//Reinitialize the recognizer and tts engines upon resuming from background such as after openning the browser
 		initializeSpeechRecognizer();
 		initializeTextToSpeech();
 	}

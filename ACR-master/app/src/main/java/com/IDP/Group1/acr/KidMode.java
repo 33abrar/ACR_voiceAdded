@@ -38,14 +38,14 @@ import com.google.firebase.database.ValueEventListener;
 public class KidMode extends Fragment implements View.OnTouchListener, View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    //private static final String ARG_PARAM1 = "param1";
-    //private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    //private String mParam1;
-    //private String mParam2;
+    private String mParam1;
+    private String mParam2;
 
-    //private OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListener;
 
     FrameLayout frameLayout;
     ConstraintLayout constraintLayout;
@@ -67,16 +67,16 @@ public class KidMode extends Fragment implements View.OnTouchListener, View.OnCl
      * @return A new instance of fragment KidMode.
      */
     // TODO: Rename and change types and number of parameters
-    /*public static KidMode newInstance(String param1, String param2) {
+    public static KidMode newInstance(String param1, String param2) {
         KidMode fragment = new KidMode();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }*/
+    }
 
-    /*
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +84,7 @@ public class KidMode extends Fragment implements View.OnTouchListener, View.OnCl
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }*/
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,22 +111,34 @@ public class KidMode extends Fragment implements View.OnTouchListener, View.OnCl
         down_btn.setOnTouchListener(this);
 
         constraintLayout.setOnClickListener(this);
-
-        database = FirebaseDatabase.getInstance();
-
-        up_btn_ref = database.getReference("Button/up_btn");
-        left_btn_ref = database.getReference("Button/left_btn");
-        right_btn_ref = database.getReference("Button/right_btn");
-        down_btn_ref = database.getReference("Button/down_btn");
+        initializeFirebase();
 
         return  V;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //database.goOffline();
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
+        //database.goOnline();
+        initializeFirebase();
         Toast.makeText(getContext(),"On Resume",Toast.LENGTH_LONG).show();
+    }
+
+    private void initializeFirebase() {
+
+        database = FirebaseDatabase.getInstance();
+        up_btn_ref = database.getReference("Button/up_btn");
+        left_btn_ref = database.getReference("Button/left_btn");
+        right_btn_ref = database.getReference("Button/right_btn");
+        down_btn_ref = database.getReference("Button/down_btn");
+
         sonar_ref = database.getReference("Sonar");
         sonar_ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -137,7 +149,6 @@ public class KidMode extends Fragment implements View.OnTouchListener, View.OnCl
                 Sonar sonar = dataSnapshot.getValue(Sonar.class);
                 debug.setText("Data Changed");
                 //Log.d(TAG, "Value is: " + value);
-
                 sonar_mostleft.setText(getString(R.string.sonar_mostleft)+": "+String.valueOf(sonar.getSonar_mostleft()));
                 sonar_left.setText(getString(R.string.sonar_left)+": "+String.valueOf(sonar.getSonar_left()));
                 sonar_mid.setText(getString(R.string.sonar_mid)+": "+String.valueOf(sonar.getSonar_mid()));
@@ -152,22 +163,7 @@ public class KidMode extends Fragment implements View.OnTouchListener, View.OnCl
                 // ...
             }
         });
-        if (FirebaseDatabase.getInstance() != null)
-        {
-            FirebaseDatabase.getInstance().goOnline();
-        }
-    }
 
-    @Override
-    public void onPause() {
-
-        super.onPause();
-        //sonar_mid.setText("On Pause");
-        Toast.makeText(getContext(),"On Pause",Toast.LENGTH_LONG).show();
-        if(FirebaseDatabase.getInstance()!=null)
-        {
-            FirebaseDatabase.getInstance().goOffline();
-        }
     }
 
     @Override
@@ -231,37 +227,12 @@ public class KidMode extends Fragment implements View.OnTouchListener, View.OnCl
         return;
     }
 
-    /*
-    @Override
-    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        // This method is called once with the initial value and again
-        // whenever data at this location is updated.
-        //System.out.println("Data change");
-        Sonar sonar = dataSnapshot.getValue(Sonar.class);
-
-        //Log.d(TAG, "Value is: " + value);
-
-        sonar_mid.setText("Data change");*//*
-
-        sonar_mostleft.setText(sonar.getSonar_mostleft());
-        sonar_left.setText(sonar.getSonar_left());
-        sonar_mid.setText(sonar.getSonar_mid());
-        sonar_right.setText(sonar.getSonar_right());
-        sonar_mostright.setText(sonar.getSonar_mostright());
-    }
-
-    @Override
-    public void onCancelled(@NonNull DatabaseError databaseError) {
-        // Failed to read value
-        //Log.w(TAG, "Failed to read value.", error.toException());
-    }
-    */
 
     // TODO: Rename method, update argument and hook method into UI event
-    /*public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
+    public void onButtonPressed(Uri uri) {
+        /*if (mListener != null) {
             mListener.onFragmentInteraction(uri);
-        }
+        }*/
     }
 
     @Override
@@ -291,9 +262,9 @@ public class KidMode extends Fragment implements View.OnTouchListener, View.OnCl
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    /*public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }*/
+    }
 
 }

@@ -35,9 +35,9 @@
 
 	<fragment
 		android:id="@+id/nav_KidMode"
-		android:name="com.IDP.Group1.acr.KidMode"
+		android:name="com.IDP.Group1.acr.ManualControl"
 		android:label="@string/kid_mode"
-		tools:layout="@layout/fragment_kid_mode" />
+		tools:layout="@layout/fragment_manual_control" />
 
 	<fragment
 		android:id="@+id/nav_Setting"
